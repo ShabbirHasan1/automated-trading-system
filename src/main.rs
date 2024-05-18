@@ -6,6 +6,7 @@ use std::env;
 use trading_client::alpaca::AlpacaClient;
 use trading_client::datastructures::client::TradingClient;
 use trading_client::datastructures::config::Config; // TODO: use lib to shorten import path. or use automated_trading_system::strategy::Strategy;
+
 #[tokio::main]
 async fn main() {
     println!("System starting.");
