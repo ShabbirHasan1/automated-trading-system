@@ -6,7 +6,6 @@ use std::env;
 use trading_client::alpaca::AlpacaClient;
 use trading_client::datastructures::client::TradingClient;
 use trading_client::datastructures::config::Config; // TODO: use lib to shorten import path. or use automated_trading_system::strategy::Strategy;
-
 #[tokio::main]
 async fn main() {
     println!("System starting.");
@@ -16,7 +15,7 @@ async fn main() {
     let config = Config::builder()
         .alpaca_api_key(env::var("ALPACA_API_KEY").expect("API key must be set")) // TODO: consider moving expects to inside config builder
         .alpaca_secret_key(env::var("ALPACA_SECRET_KEY").expect("Secret key must be set"))
-        .alpaca_base_url(env::var("ALPACA_BASE_URL").expect("Base URL must be set"))
+        .enable_real_trading(false)
         .build()
         .expect("Build Error");
 
@@ -24,7 +23,7 @@ async fn main() {
 
     println!("🚀 The automated trading system is live. 📈");
 
-    // Each `strategy`` has its own instance of `client`` that will track history. TODO: push to database or redis for single source of truth.
+    // Each `strategy`` has its own instance of `client` that will track history. TODO: push to database or redis for single source of truth.
     let mut strategies: Vec<Box<dyn Strategy>> = vec![
         Box::new(DipBuySpyCallsStrategy::new(client.clone())),
         Box::new(MovingAverageCrossOverStrategy::new(client.clone())),
