@@ -6,6 +6,8 @@ use std::env;
 use trading_client::alpaca::AlpacaClient;
 use trading_client::datastructures::client::TradingClient;
 use trading_client::datastructures::config::Config; // TODO: use lib to shorten import path. or use automated_trading_system::strategy::Strategy;
+use trading_client::datastructures::client::FeedType;
+
 #[tokio::main]
 async fn main() {
     println!("System starting.");
@@ -23,19 +25,23 @@ async fn main() {
 
     println!("🚀 The automated trading system is live. 📈");
 
-    // Each `strategy`` has its own instance of `client` that will track history. TODO: push to database or redis for single source of truth.
+    let x = client.get_asset("AAPL").await;
+    println!("Asset data for AAPL: {:?}", x);
+
+
+    // Each `strategy` has its own instance of `client` that will track history. TODO: push to database or redis for single source of truth.
     let mut strategies: Vec<Box<dyn Strategy>> = vec![
         Box::new(DipBuySpyCallsStrategy::new(client.clone())),
         Box::new(MovingAverageCrossOverStrategy::new(client.clone())),
     ];
 
-    let symbol = "BTC";
-    let symbols = ["SPY", "BTC"];
+    let symbol = "BTC/USD";
+    // let symbols = ["SPY", "BTC"];
 
-    // TODO: Loop over symbols. Should strategies have their own symbol set?
-    // What if 1 strategy = 1 async process running independently.
+    // // TODO: Loop over symbols. Should strategies have their own symbol set?
+    // // What if 1 strategy = 1 async process running independently.
 
-    if let Ok(socket) = client.subscribe_to_data(symbol).await {
+    if let Ok(socket) = client.subscribe_to_data(symbol, FeedType::Stocks).await {
         println!("Success")
         // while let Some(message) = socket.next().await {
         //     if let Ok(Message::Text(text)) = message {
