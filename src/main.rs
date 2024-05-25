@@ -36,6 +36,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let symbol = "AAPL";
 
+    // TODO: consider ::builder() vs ::new()
     let request = SubscriptionRequestBuilder::new()
         .trades(&[symbol])
         // .quotes(&[symbol])
