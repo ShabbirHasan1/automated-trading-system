@@ -2,9 +2,9 @@ pub mod strategies;
 pub mod strategy;
 use futures_util::stream::Stream;
 use futures_util::{future::join_all, StreamExt};
+use std::sync::{Arc, Mutex};
 use strategy::Strategy;
 use tokio::task;
-use std::sync::{Arc, Mutex};
 use tokio_tungstenite::{tungstenite::Message, Connector, WebSocketStream};
 
 async fn handle_tick_concurrently(

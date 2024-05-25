@@ -34,13 +34,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         Box::new(MovingAverageCrossOverStrategy::new(client.clone())),
     ];
 
+    let symbol = "AAPL";
+
     let request = SubscriptionRequestBuilder::new()
-        .trades(&["AAPL", "GOOGL"])
-        .quotes(&["AAPL", "GOOGL"])
-        .bars(&["AAPL", "GOOGL"])
-        .updated_bars(&["AAPL", "GOOGL"])
-        .daily_bars(&["AAPL", "GOOGL"])
-        .orderbooks(&["AAPL", "GOOGL"])
+        .trades(&[symbol])
+        // .quotes(&[symbol])
+        // .bars(&[symbol])
+        // .updated_bars(&[symbol])
+        // .daily_bars(&[symbol])
+        // .orderbooks(&[symbol])
         .build();
 
     let ws_stream = client.subscribe(request, FeedType::Stocks).await?;
