@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "eamodio.gitlens",
+        "rust-lang.rust-analyzer",
+        "akamud.vscode-theme-onedark",
+        "richie5um2.vscode-sort-json",
+        "vscode-icons-team.vscode-icons",
+        "alefragnani.Bookmarks"
+    ]
+}
